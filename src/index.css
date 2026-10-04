@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   SIGECA — Design Tokens
+   Duas identidades convivem no mesmo produto:
+   - "auth"  -> ecra de login: preto/branco elegante (ink/paper/mist)
+   - "app"   -> portal autenticado: navbar escura, roxo de destaque,
+                azul institucional, fundo cinza-claro (portal/index.php)
+   ============================================================ */
+@theme {
+  /* Tipografia — uma só família em todos os papéis, a pedido */
+  --font-display: 'Inter', sans-serif;   /* titulos do login */
+  --font-syne: 'Inter', sans-serif;        /* titulos do portal autenticado */
+  --font-sans: 'Inter', sans-serif;
+
+  /* Marca AECA / SIGECA */
+  --color-brand-50:  #eef4fb;
+  --color-brand-100: #d6e4f2;
+  --color-brand-200: #adc9e5;
+  --color-brand-300: #7ba8d3;
+  --color-brand-400: #4a80b8;
+  --color-brand-500: #1f5a94;
+  --color-brand-600: #003366; /* cor institucional principal */
+  --color-brand-700: #002a54;
+  --color-brand-800: #002142;
+  --color-brand-900: #001830;
+
+  /* Accent roxo do portal autenticado (botoes, tags, gradientes) */
+  --color-accent-500: #6C5CE7;
+  --color-accent-600: #5b4bd6;
+
+  /* Fundo/navbar do portal autenticado */
+  --color-portal-bg:  #F8F9FB;
+  --color-portal-nav: #0B0F1A;
+
+  /* Neutros (herdados do login actual) */
+  --color-ink:      #0a0a0a;
+  --color-paper:    #ffffff;
+  --color-mist-50:  #f9f9f8;
+  --color-mist-100: #f0efeb;
+  --color-mist-200: #e2e0d8;
+  --color-mist-300: #cbc8bd;
+  --color-mist-400: #9e9b93;
+  --color-mist-600: #5c5a55;
+
+  /* Estados */
+  --color-success-bg:   #f0fdf4;
+  --color-success-bd:   #bbf7d0;
+  --color-success-text: #166534;
+  --color-error-bg:     #fef2f2;
+  --color-error-bd:     #fecaca;
+  --color-error-text:   #991b1b;
+  --color-warning-bg:   #fffbeb;
+  --color-warning-bd:   #fde68a;
+  --color-warning-text: #92400e;
+
+  /* Raios e sombras consistentes com o login actual */
+  --radius-sig-sm: 8px;
+  --radius-sig-md: 10px;
+  --radius-sig-lg: 16px;
+  --shadow-sig-card: 0 1px 3px rgba(10,10,10,0.06), 0 1px 2px rgba(10,10,10,0.04);
+  --shadow-sig-float: 0 8px 24px rgba(10,10,10,0.10);
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html, body {
+    font-family: var(--font-sans);
+    background: var(--color-mist-50);
+    color: var(--color-ink);
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+  ::selection {
+    background: var(--color-brand-600);
+    color: #fff;
+  }
+  a, button, input, select, textarea {
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease,
+                opacity 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-down {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fade-in { animation: fade-in 0.3s ease-out both; }
+  .animate-slide-up { animation: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-slide-down { animation: slide-down 0.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-scale-in { animation: scale-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  .hover-lift { transition: transform 150ms ease, box-shadow 150ms ease; }
+  .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+}
