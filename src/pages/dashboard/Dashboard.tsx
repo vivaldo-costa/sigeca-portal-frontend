@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useDashboard } from '@/hooks/useDashboard'
 import { useAuthStore } from '@/store/auth'
 import { HeroSection } from '@/components/dashboard/HeroSection'
@@ -14,6 +14,7 @@ import { FaqSection } from '@/components/dashboard/FaqSection'
 import { InscreverModal } from '@/components/dashboard/InscreverModal'
 import { PagamentoModal } from '@/components/dashboard/PagamentoModal'
 import { AdicionarCarrinhoModal } from '@/components/dashboard/AdicionarCarrinhoModal'
+import { ProdutoModalDetalhe } from '@/components/dashboard/ProdutoModalDetalhe'
 import { Alert } from '@/components/ui/Alert'
 import { NotificacoesLocais } from '@/components/notificacoes/NotificacoesLocais'
 import type { Produto, Atividade } from '@/types/dashboard'
@@ -39,6 +40,15 @@ export function DashboardPage() {
   const [inscrevendo, setInscrevendo] = useState<Atividade | null>(null)
   const [pagando, setPagando] = useState<Atividade | null>(null)
   const [adicionandoProduto, setAdicionandoProduto] = useState<Produto | null>(null)
+  // Link externo de partilha (redes sociais): /dashboard/loja?produto=ID abre logo o produto.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const produtoPartilhadoId = Number(searchParams.get('produto')) || null
+  const produtoPartilhado = produtoPartilhadoId ? data?.produtos.find((p) => p.id === produtoPartilhadoId) ?? null : null
+  function fecharProdutoPartilhado() {
+    const novos = new URLSearchParams(searchParams)
+    novos.delete('produto')
+    setSearchParams(novos, { replace: true })
+  }
 
   if (isLoading) {
     return (
@@ -68,6 +78,14 @@ export function DashboardPage() {
 
       {(mostrarTudo || secao === 'loja') && (
         <LojaSection produtos={data.produtos} onAdicionar={setAdicionandoProduto} />
+      )}
+
+      {produtoPartilhado && (
+        <ProdutoModalDetalhe
+          produto={produtoPartilhado}
+          onClose={fecharProdutoPartilhado}
+          onAdicionar={(p) => { fecharProdutoPartilhado(); setAdicionandoProduto(p) }}
+        />
       )}
 
       {(mostrarTudo || secao === 'comunidade') && (
