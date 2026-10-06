@@ -9,7 +9,7 @@ import { Contador, EmptyState } from './ActividadesTab'
 
 const STATUS_META: Record<StatusPedido, { cls: string; label: string }> = {
   pendente: { cls: 'bg-yellow-100 text-yellow-800', label: 'Pendente' },
-  aguardando_pagamento: { cls: 'bg-orange-100 text-orange-800', label: 'Aguarda pagamento' },
+  aguardando_pagamento: { cls: 'bg-orange-100 text-orange-800', label: 'Pagamento em validação' },
   pago: { cls: 'bg-green-100 text-green-800', label: 'Pago' },
   enviado: { cls: 'bg-blue-100 text-blue-800', label: 'Enviado' },
   entregue: { cls: 'bg-teal-100 text-teal-800', label: 'Entregue' },

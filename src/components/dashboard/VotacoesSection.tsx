@@ -1,8 +1,11 @@
+import { useState } from 'react'
+import { X } from 'lucide-react'
 import type { Votacao } from '@/types/dashboard'
 import { uploadUrl } from '@/lib/uploads'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 
 export function VotacoesSection({ votacoes }: { votacoes: Votacao[] }) {
+  const [galeria, setGaleria] = useState<{ fotos: string[]; indice: number } | null>(null)
   if (votacoes.length === 0) return null
 
   return (
@@ -21,11 +24,18 @@ export function VotacoesSection({ votacoes }: { votacoes: Votacao[] }) {
               <ScrollReveal key={v.id} atraso={Math.min(i, 6) * 70}>
                 <div className="rounded-2xl bg-white p-5 shadow-sm transition hover:shadow-md">
                 <div className="flex flex-col gap-4 sm:flex-row">
-                  {v.imagem && (
-                    <div className="h-24 w-full shrink-0 overflow-hidden rounded-xl bg-mist-100 sm:w-32">
-                      <img src={uploadUrl('votacoes', v.imagem)!} className="size-full object-cover" alt="" />
-                    </div>
-                  )}
+                  {(v.imagem || (v.imagens?.length ?? 0) > 0) && (() => {
+                    const fotos = [v.imagem, ...(v.imagens ?? [])].filter(Boolean) as string[]
+                    return (
+                      <button type="button" onClick={() => setGaleria({ fotos, indice: 0 })}
+                        className="relative h-24 w-full shrink-0 cursor-zoom-in overflow-hidden rounded-xl bg-mist-100 sm:w-32">
+                        <img src={uploadUrl('votacoes', fotos[0])!} className="size-full object-cover" alt="" />
+                        {fotos.length > 1 && (
+                          <span className="absolute bottom-1 right-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white">+{fotos.length - 1} fotos</span>
+                        )}
+                      </button>
+                    )
+                  })()}
                   <div className="flex-1">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <h3 className="font-syne font-bold text-slate-900">{v.titulo}</h3>
@@ -71,6 +81,22 @@ export function VotacoesSection({ votacoes }: { votacoes: Votacao[] }) {
           })}
         </div>
       </div>
+    {galeria && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 bg-black/85 p-4" onClick={() => setGaleria(null)}>
+          <button type="button" className="absolute right-4 top-4 text-white/80 hover:text-white" aria-label="Fechar"><X className="size-6" /></button>
+          <img src={uploadUrl('votacoes', galeria.fotos[galeria.indice])!} className="max-h-[75vh] max-w-full rounded-xl object-contain" alt="" onClick={(e) => e.stopPropagation()} />
+          {galeria.fotos.length > 1 && (
+            <div className="flex max-w-full gap-2 overflow-x-auto" onClick={(e) => e.stopPropagation()}>
+              {galeria.fotos.map((f, i) => (
+                <button key={f} type="button" onClick={() => setGaleria({ ...galeria, indice: i })}
+                  className={`size-14 shrink-0 overflow-hidden rounded-lg border-2 ${i === galeria.indice ? 'border-white' : 'border-transparent opacity-60'}`}>
+                  <img src={uploadUrl('votacoes', f)!} className="size-full object-cover" alt="" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </section>
   )
 }

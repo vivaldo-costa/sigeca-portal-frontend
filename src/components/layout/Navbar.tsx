@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ChevronDown, ShoppingCart, User, LogOut, Menu, X, Flag } from 'lucide-react'
+import { ChevronDown, ShoppingCart, User, LogOut, Menu, X, Flag, ExternalLink } from 'lucide-react'
+import { LINKS_EXTERNOS } from '@/lib/linksExternos'
 import { useAuthStore } from '@/store/auth'
 import { cn } from '@/lib/cn'
 import { uploadUrl } from '@/lib/uploads'
@@ -66,6 +67,12 @@ export function Navbar() {
             >
               {l.label}
             </NavLink>
+          ))}
+          {LINKS_EXTERNOS.map((l) => (
+            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1 rounded-full bg-accent-500/15 px-2.5 text-accent-500 transition-colors hover:bg-accent-500/25">
+              {l.label} <ExternalLink className="size-3" />
+            </a>
           ))}
         </nav>
 
@@ -147,6 +154,12 @@ export function Navbar() {
               >
                 {l.label}
               </NavLink>
+            ))}
+            {LINKS_EXTERNOS.map((l) => (
+              <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 rounded-lg px-2 py-2.5 text-sm font-semibold text-accent-500 hover:bg-white/10">
+                {l.label} <ExternalLink className="size-3.5" />
+              </a>
             ))}
           </nav>
         </>

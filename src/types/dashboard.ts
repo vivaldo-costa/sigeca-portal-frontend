@@ -143,6 +143,7 @@ export interface Votacao {
   titulo: string
   descricao: string | null
   imagem: string | null
+  imagens?: string[]
   data_inicio: string
   data_fim: string
   ativo: boolean

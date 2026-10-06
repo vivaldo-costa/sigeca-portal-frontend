@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Flag, Loader2 } from 'lucide-react'
+import { Flag, Loader2, ShieldCheck } from 'lucide-react'
 import { useMinhasDenuncias, useSubmeterDenuncia } from '@/hooks/useDenuncias'
 import { getApiErrorMessage } from '@/lib/api'
 import { notificar } from '@/lib/notificar'
@@ -49,6 +49,13 @@ export function DenunciarPage() {
       <p className="mb-6 text-sm text-mist-400">
         Usa este formulário para reportar uma situação irregular. Podes optar por não te identificares.
       </p>
+      <div className="mb-6 flex gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-[13px] text-emerald-900">
+        <ShieldCheck className="mt-0.5 size-4 shrink-0" />
+        <p>
+          <span className="font-semibold">Os teus dados estão protegidos.</span> A tua identidade nunca é revelada à pessoa,
+          agrupamento ou estrutura denunciada — a denúncia é tratada com total confidencialidade pela coordenação.
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit} className="mb-10 space-y-4 rounded-2xl border border-mist-100 bg-white p-6 shadow-sm">
 
