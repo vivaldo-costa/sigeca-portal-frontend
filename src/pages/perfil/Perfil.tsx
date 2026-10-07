@@ -14,7 +14,7 @@ import { EditarPerfilModal } from '@/components/perfil/EditarPerfilModal'
 
 /**
  * Pagina de Perfil — equivalente a portal/perfil/index.php: cabecalho com
- * foto/nome/badges, 5 tabs (Sobre, Actividades, Formacoes, Minhas Compras,
+ * foto/nome/badges, 5 tabs (Sobre, Actividades, Formacoes, As Minhas Compras,
  * Votacoes — esta ultima so quando pode_ver_votacoes) e modal de edicao.
  */
 export function PerfilPage() {

@@ -44,7 +44,7 @@ function useDocumentos(cartao: Cartao | null, utilizadorId: number): DocDef[] {
       cor: 'bg-purple-50 text-purple-700',
       url: cartao ? `/cartao/pdf?id=${utilizadorId}` : null,
       nomeFicheiro: 'cartao-sigeca.pdf',
-      label: cartao ? 'Baixar PDF' : 'Gerar cartão primeiro',
+      label: cartao ? 'Descarregar PDF' : 'Gerar cartão primeiro',
       ativo: !!cartao,
     },
     {

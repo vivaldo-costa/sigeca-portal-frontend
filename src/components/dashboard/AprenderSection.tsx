@@ -10,7 +10,7 @@ interface Tutorial {
 }
 
 const VIDEOS: Tutorial[] = [
-  { titulo: 'Como fazer login?', duracao: '3:24', ficheiro: 'SIGECA_Iniciar_Sessao.mp4' },
+  { titulo: 'Como iniciar sessão?', duracao: '3:24', ficheiro: 'SIGECA_Iniciar_Sessao.mp4' },
   { titulo: 'Como validar numa actividade?', duracao: '2:58', ficheiro: 'confirmar_actividade.mp4' },
   { titulo: 'Como gerar e descarregar documentos?', duracao: '2:10', ficheiro: 'SIGECA_documentos.mp4' },
   { titulo: 'Como usar a loja e fazer compras?', duracao: '2:10', ficheiro: 'SIGECA_compras.mp4' },

@@ -95,7 +95,7 @@ export function EtapaEntrega({
                 <input
                   value={bairro}
                   onChange={(e) => setBairro(e.target.value)}
-                  placeholder="Ex: Patriota"
+                  placeholder="Ex.: Patriota"
                   className="w-full rounded-xl border border-mist-200 px-3 py-2.5 text-sm outline-none transition focus:border-brand-600 focus:ring-2 focus:ring-brand-600/15"
                 />
               </div>
@@ -104,7 +104,7 @@ export function EtapaEntrega({
                 <input
                   value={referenciaMorada}
                   onChange={(e) => setReferenciaMorada(e.target.value)}
-                  placeholder="Ex: Perto da Igreja…"
+                  placeholder="Ex.: Perto da Igreja…"
                   className="w-full rounded-xl border border-mist-200 px-3 py-2.5 text-sm outline-none transition focus:border-brand-600 focus:ring-2 focus:ring-brand-600/15"
                 />
               </div>

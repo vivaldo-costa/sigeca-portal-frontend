@@ -59,7 +59,7 @@ export function FormacoesTab({ formacoes }: { formacoes: InscricaoFormacao[] }) 
 
                 <div className="flex flex-wrap items-center justify-between gap-2 border-t border-mist-100 pt-2">
                   <span className="flex items-center gap-1.5 text-xs text-mist-400">
-                    <MapPin className="size-3 text-brand-600" /> {f.local ?? 'Local não informado'}
+                    <MapPin className="size-3 text-brand-600" /> {f.local ?? 'Local não indicado'}
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-mist-100 px-2.5 py-1 text-xs font-semibold text-mist-600">
                     <CalendarPlus className="size-3" /> Inscrito em {new Date(f.inscrito_em).toLocaleDateString('pt-PT')}

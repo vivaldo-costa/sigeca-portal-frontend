@@ -8,7 +8,7 @@ const TABS: { id: PerfilTab; label: string; icon: typeof User }[] = [
   { id: 'actividades', label: 'Actividades', icon: Tent },
   { id: 'formacoes', label: 'Formações', icon: GraduationCap },
   { id: 'certificados', label: 'Certificados', icon: Award },
-  { id: 'produtos', label: 'Minhas Compras', icon: ShoppingBag },
+  { id: 'produtos', label: 'As Minhas Compras', icon: ShoppingBag },
   { id: 'eleicoes', label: 'Votações', icon: VoteIcon },
 ]
 

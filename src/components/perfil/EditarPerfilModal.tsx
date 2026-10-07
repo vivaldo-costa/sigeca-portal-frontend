@@ -8,7 +8,7 @@ import { getApiErrorMessage } from '@/lib/api'
 import { uploadUrl } from '@/lib/uploads'
 import type { PerfilDados } from '@/types/perfil'
 
-const SACRAMENTOS_DISPONIVEIS = ['Baptismo', 'Comunhão', 'Crisma', 'Matrimônio', 'Ordem', 'Consagrada']
+const SACRAMENTOS_DISPONIVEIS = ['Baptismo', 'Comunhão', 'Crisma', 'Matrimónio', 'Ordem', 'Consagrada']
 const GRUPOS_SANGUINEOS = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 
 interface Props {

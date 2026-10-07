@@ -21,7 +21,7 @@ export function CarrinhoPage() {
           <ChevronLeft className="size-4" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Meu Carrinho</h1>
+          <h1 className="text-2xl font-bold text-slate-900">O Meu Carrinho</h1>
           <p className="text-sm text-mist-400">
             {data ? `${data.itens.length} ${data.itens.length === 1 ? 'item' : 'itens'}` : ' '}
           </p>

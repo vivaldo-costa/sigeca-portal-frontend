@@ -20,7 +20,7 @@ export function RedefinirPasswordPage() {
     e.preventDefault()
     setErro(null)
     if (novaSenha !== confirmar) {
-      setErro('As duas passwords têm de ser iguais.')
+      setErro('As duas palavras-passe têm de ser iguais.')
       return
     }
     setEnviando(true)
@@ -28,7 +28,7 @@ export function RedefinirPasswordPage() {
       await api.post('/auth/redefinir-password', { token, novaSenha })
       navigate('/login?redefinida=1', { replace: true })
     } catch (err) {
-      setErro(getApiErrorMessage(err, 'Não foi possível redefinir a password.'))
+      setErro(getApiErrorMessage(err, 'Não foi possível redefinir a palavra-passe.'))
     } finally {
       setEnviando(false)
     }
@@ -50,15 +50,15 @@ export function RedefinirPasswordPage() {
   return (
     <div className="grid min-h-screen place-items-center bg-paper px-4">
       <div className="w-full max-w-[400px]">
-        <h1 className="mb-1.5 font-display text-[1.8rem] font-bold text-ink">Definir nova password</h1>
-        <p className="mb-6 text-[14.5px] text-mist-400">Escolhe uma nova password para a tua conta SIGECA.</p>
+        <h1 className="mb-1.5 font-display text-[1.8rem] font-bold text-ink">Definir nova palavra-passe</h1>
+        <p className="mb-6 text-[14.5px] text-mist-400">Escolhe uma nova palavra-passe para a tua conta SIGECA.</p>
 
         <form onSubmit={handleSubmit}>
           {erro && <div className="mb-4"><Alert variant="error">{erro}</Alert></div>}
           <Input
             id="novaSenha"
             type="password"
-            label="Nova password"
+            label="Nova palavra-passe"
             icon={<Lock className="size-4" />}
             placeholder="••••••••"
             autoComplete="new-password"
@@ -69,7 +69,7 @@ export function RedefinirPasswordPage() {
           <Input
             id="confirmar"
             type="password"
-            label="Confirmar password"
+            label="Confirmar palavra-passe"
             icon={<Lock className="size-4" />}
             placeholder="••••••••"
             autoComplete="new-password"
@@ -78,7 +78,7 @@ export function RedefinirPasswordPage() {
             onChange={(e) => setConfirmar(e.target.value)}
           />
           <Button type="submit" size="lg" className="mt-2 w-full" loading={enviando}>
-            Redefinir password
+            Redefinir palavra-passe
           </Button>
         </form>
       </div>

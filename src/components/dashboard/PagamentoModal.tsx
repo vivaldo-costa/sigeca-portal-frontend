@@ -165,7 +165,7 @@ export function PagamentoModal({ atividade: a, onClose }: Props) {
 
             <Input
               label="Referência da transacção"
-              placeholder="Ex: TRX20260728001"
+              placeholder="Ex.: TRX20260728001"
               required
               value={transacao}
               onChange={(e) => setTransacao(e.target.value)}

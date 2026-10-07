@@ -12,7 +12,7 @@ const FUNCIONALIDADES = [
   { icon: CalendarCheck, titulo: 'Actividades & Eventos', desc: 'Inscreve-te em acampamentos, retiros e actividades da tua secção.' },
   { icon: GraduationCap, titulo: 'Formações', desc: 'Acede a cursos e formações escutistas certificados pela AECA.' },
   { icon: IdCard, titulo: 'Cartão Digital', desc: 'O teu documento de identificação oficial, sempre à mão.' },
-  { icon: FileText, titulo: 'Documentos', desc: 'Baixa declarações, certificados e formulários oficiais.' },
+  { icon: FileText, titulo: 'Documentos', desc: 'Descarrega declarações, certificados e formulários oficiais.' },
   { icon: Vote, titulo: 'Votações', desc: 'Participa nas decisões da associação de forma democrática.' },
   { icon: ShoppingBag, titulo: 'Loja Escutista', desc: 'Equipamento e merchandising oficial com entrega ao domicílio.' },
 ]
@@ -42,7 +42,7 @@ export function ComunidadeSection({ totalUtilizadores, avatares, stats }: Props)
           <div className="space-y-6">
             <span className="text-xs font-bold uppercase tracking-widest text-accent-500">Comunidade SIGECA</span>
             <h2 className="text-4xl font-bold leading-tight text-slate-900">
-              Conecta-te com mais de <span className="text-accent-500">{totalUtilizadores.toLocaleString('pt-PT')}+</span> escuteiros
+              Liga-te a mais de <span className="text-accent-500">{totalUtilizadores.toLocaleString('pt-PT')}+</span> escuteiros
             </h2>
             <p className="text-base leading-relaxed text-slate-600">
               O SIGECA é a plataforma digital oficial dos Escuteiros Católicos de Angola. Aqui
@@ -104,7 +104,7 @@ export function ComunidadeSection({ totalUtilizadores, avatares, stats }: Props)
                 </div>
               </div>
               <p className="text-sm text-slate-600">
-                Junta-te a <strong>{totalUtilizadores.toLocaleString('pt-PT')}</strong> escuteiros activos em todo Angola
+                Junta-te a <strong>{totalUtilizadores.toLocaleString('pt-PT')}</strong> escuteiros activos em toda a Angola
               </p>
             </div>
 

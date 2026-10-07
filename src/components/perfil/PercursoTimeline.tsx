@@ -45,7 +45,7 @@ export function PercursoTimeline({ isLoading, isError, eventos }: Props) {
           <Calendar className="size-6 text-mist-300" />
         </div>
         <h4 className="text-sm font-semibold text-slate-700">Ainda sem registos no percurso</h4>
-        <p className="mt-1.5 text-xs text-mist-400">Mudanças de secção e transferências aparecerão aqui à medida que forem acontecendo.</p>
+        <p className="mt-1.5 text-xs text-mist-400">Mudanças de secção e transferências aparecerão aqui à medida que forem a acontecer.</p>
       </div>
     )
   }

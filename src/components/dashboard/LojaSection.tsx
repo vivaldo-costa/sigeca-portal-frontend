@@ -162,7 +162,7 @@ export function LojaSection({ produtos, onAdicionar }: Props) {
 
         {filtrados.length === 0 ? (
           <p className="py-10 text-center text-sm text-mist-400">
-            {produtos.length === 0 ? 'Nenhum produto disponível no momento.' : 'Nenhum produto encontrado.'}
+            {produtos.length === 0 ? 'Nenhum produto disponível de momento.' : 'Nenhum produto encontrado.'}
           </p>
         ) : (
           <div className="overflow-hidden">

@@ -13,7 +13,7 @@ const LABEL_TIPO: Record<TipoCertificado, string> = {
 }
 
 /**
- * "Meus Certificados" — o módulo de certificados (emissão, PDF, QR de
+ * "Os Meus Certificados" — o módulo de certificados (emissão, PDF, QR de
  * verificação) já existia por completo no backend para a gestão, mas o
  * Portal só tinha a verificação pública de um QR de terceiros
  * (`VerificarCertificado.tsx`). Esta aba é a parte que faltava: o próprio

@@ -52,7 +52,7 @@ export function ActividadesTab({ atividades }: { atividades: InscricaoEvento[] }
                   <div className="flex flex-wrap items-center justify-between gap-2 border-t border-mist-100 pt-2">
                     <div className="flex flex-wrap items-center gap-3 text-xs text-mist-400">
                       <span className="flex items-center gap-1.5">
-                        <MapPin className="size-3 text-brand-600" /> {e.local ?? 'Local não informado'}
+                        <MapPin className="size-3 text-brand-600" /> {e.local ?? 'Local não indicado'}
                       </span>
                       <span className="flex items-center gap-1.5">
                         <CalendarCheck className="size-3 text-mist-300" /> Inscrito em {new Date(e.inscrito_em).toLocaleDateString('pt-PT')}

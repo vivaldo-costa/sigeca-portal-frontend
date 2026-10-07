@@ -75,7 +75,7 @@ export function EtapaPagamento({
 
         <Input
           label="Referência da transacção *"
-          placeholder="Ex: TRF123456789"
+          placeholder="Ex.: TRF123456789"
           value={referencia}
           onChange={(e) => setReferencia(e.target.value)}
         />

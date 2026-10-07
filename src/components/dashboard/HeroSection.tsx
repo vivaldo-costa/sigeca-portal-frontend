@@ -9,7 +9,7 @@ import { CartaoDigital } from './CartaoDigital'
 import type { Cartao } from '@/types/dashboard'
 import type { Utilizador } from '@/types/auth'
 
-const BENEFICIOS = ['Identificação oficial', 'Actividades', 'Formações', 'QR verificável', 'Download PDF']
+const BENEFICIOS = ['Identificação oficial', 'Actividades', 'Formações', 'QR verificável', 'Descarregar PDF']
 
 interface Props {
   cartao: Cartao | null
@@ -104,7 +104,7 @@ function CartaoPronto({ cartao, user }: { cartao: Cartao; user: Utilizador }) {
         </span>
         <h3 className="mb-2 hidden font-syne text-2xl font-bold text-ink md:block">O teu cartão está pronto</h3>
         <p className="mb-2 hidden text-sm text-mist-400 md:block">
-          Arrasta o cartão para o rodares. Clica em <strong>Ver verso</strong> para ver o QR Code.
+          Arrasta o cartão para o rodares. Clica em <strong>Ver verso</strong> para ver o código QR.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-3">
@@ -113,7 +113,7 @@ function CartaoPronto({ cartao, user }: { cartao: Cartao; user: Utilizador }) {
             loading={baixando}
             className="rounded-full bg-brand-600 hover:bg-brand-700"
           >
-            <Download className="size-4" /> Baixar PDF
+            <Download className="size-4" /> Descarregar PDF
           </Button>
         </div>
       </div>

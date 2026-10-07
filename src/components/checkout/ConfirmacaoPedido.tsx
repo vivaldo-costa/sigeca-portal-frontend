@@ -31,8 +31,8 @@ export function ConfirmacaoPedido({ pedidoId }: { pedidoId: number }) {
         confirmação do pagamento pela equipa da AECA.
       </p>
       <p className="mx-auto mb-8 max-w-sm text-xs text-mist-300">
-        Vais poder acompanhar o estado do pedido e transferir o recibo na tab
-        <strong> Minhas Compras</strong> do teu perfil.
+        Vais poder acompanhar o estado do pedido e transferir o recibo no separador
+        <strong> As Minhas Compras</strong> do teu perfil.
       </p>
 
       <div className="flex flex-col justify-center gap-3 sm:flex-row">

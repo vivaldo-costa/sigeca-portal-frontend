@@ -47,7 +47,7 @@ export function InscreverModal({ atividade: a, onClose }: Props) {
               </div>
               <p className="text-sm font-medium text-slate-800">Inscrição enviada com sucesso!</p>
               <p className="text-xs text-mist-400">
-                Fica <strong>pendente de aprovação</strong>. Vais poder acompanhar o estado na tab
+                Fica <strong>pendente de aprovação</strong>. Vais poder acompanhar o estado no separador
                 {isEvento ? ' Actividades' : ' Formações'} do teu perfil.
               </p>
               <Button onClick={onClose} className="mt-2 w-full">Fechar</Button>

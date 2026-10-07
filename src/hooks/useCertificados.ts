@@ -3,7 +3,7 @@ import { api } from '@/lib/api'
 import { baixarFicheiroProtegido } from '@/lib/download'
 import type { Certificado } from '@/types/perfil'
 
-/** "Meus Certificados" — auto-serviço, independente do payload combinado de usePerfil(). */
+/** "Os Meus Certificados" — auto-serviço, independente do payload combinado de usePerfil(). */
 export function useMeusCertificados() {
   return useQuery({
     queryKey: ['portal-meus-certificados'],

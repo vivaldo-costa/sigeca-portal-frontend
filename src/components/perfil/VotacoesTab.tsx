@@ -64,14 +64,14 @@ function VotacaoCard({ votacao: v }: { votacao: VotacaoPerfil }) {
               <CircleCheck className="size-4 text-green-600" />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-green-600">O seu voto</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-green-600">O teu voto</p>
               <p className="mt-0.5 text-sm font-semibold text-green-900">{v.opcao_votada ?? '—'}</p>
             </div>
           </div>
         )}
         {!aberta && !jaVotou && (
           <div className="flex items-center gap-2 text-sm italic text-mist-400">
-            <History className="size-3.5" /> A votação encerrou sem registo do seu voto.
+            <History className="size-3.5" /> A votação encerrou sem registo do teu voto.
           </div>
         )}
       </div>
@@ -100,7 +100,7 @@ function FormularioVoto({ votacao }: { votacao: VotacaoPerfil }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-2">
       <p className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-mist-400">
-        <ListChecks className="size-3.5" /> Escolha uma opção
+        <ListChecks className="size-3.5" /> Escolhe uma opção
       </p>
       {votacao.opcoes.map((o) => (
         <label
