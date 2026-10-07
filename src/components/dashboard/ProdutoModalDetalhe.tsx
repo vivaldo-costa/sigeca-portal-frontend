@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { X, ShoppingCart, Ban, ChevronLeft, ChevronRight, Star } from 'lucide-react'
-import { uploadUrl } from '@/lib/uploads'
+import { X, ShoppingCart, Ban, Star } from 'lucide-react'
 import { ProdutoAvaliacoes } from './ProdutoAvaliacoes'
+import { VisualizadorProduto } from './VisualizadorProduto'
 import type { Produto } from '@/types/dashboard'
 
 interface Props {
@@ -19,16 +18,7 @@ interface Props {
  */
 export function ProdutoModalDetalhe({ produto, onClose, onAdicionar }: Props) {
   const fotos = produto.imagens.length > 0 ? produto.imagens : produto.imagem ? [produto.imagem] : []
-  const [indice, setIndice] = useState(0)
   const disponivel = produto.stock > 0
-  const fotoAtual = fotos[indice]
-
-  function anterior() {
-    setIndice((i) => (i - 1 + fotos.length) % fotos.length)
-  }
-  function seguinte() {
-    setIndice((i) => (i + 1) % fotos.length)
-  }
 
   // Renderizado via portal directamente em document.body: o card do produto
   // (ProdutoCard) e o carrossel da Loja têm `overflow-hidden` em vários
@@ -49,54 +39,9 @@ export function ProdutoModalDetalhe({ produto, onClose, onAdicionar }: Props) {
           <X className="size-4" />
         </button>
 
-        {/* Imagem principal + miniaturas */}
-        <div className="flex w-full shrink-0 flex-col bg-mist-50 p-6 sm:w-1/2">
-          <div className="relative flex flex-1 items-center justify-center overflow-hidden">
-            {fotoAtual ? (
-              <img
-                src={uploadUrl('produtos', fotoAtual)!}
-                alt={produto.nome}
-                className="mx-auto h-64 w-full cursor-zoom-in object-contain transition-transform duration-300 hover:scale-110 sm:h-80"
-              />
-            ) : (
-              <div className="grid h-64 w-full place-items-center text-sm text-mist-300 sm:h-80">Sem imagem</div>
-            )}
-            {fotos.length > 1 && (
-              <>
-                <button
-                  onClick={anterior}
-                  aria-label="Foto anterior"
-                  className="absolute left-0 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-slate-600 shadow transition hover:bg-white"
-                >
-                  <ChevronLeft className="size-4" />
-                </button>
-                <button
-                  onClick={seguinte}
-                  aria-label="Foto seguinte"
-                  className="absolute right-0 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-slate-600 shadow transition hover:bg-white"
-                >
-                  <ChevronRight className="size-4" />
-                </button>
-              </>
-            )}
-          </div>
-
-          {fotos.length > 1 && (
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
-              {fotos.map((foto, i) => (
-                <button
-                  key={`${foto}-${i}`}
-                  onClick={() => setIndice(i)}
-                  aria-label={`Ver foto ${i + 1}`}
-                  className={`size-12 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition ${
-                    i === indice ? 'border-brand-600' : 'border-transparent opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <img src={uploadUrl('produtos', foto)!} className="size-full object-contain p-1" alt="" />
-                </button>
-              ))}
-            </div>
-          )}
+        {/* Imagem principal (apresentação de estúdio, zoom, rotação) + miniaturas */}
+        <div className="flex w-full shrink-0 flex-col bg-white p-5 sm:w-1/2">
+          <VisualizadorProduto fotos={fotos} nome={produto.nome} />
         </div>
 
         {/* Detalhes e acção */}

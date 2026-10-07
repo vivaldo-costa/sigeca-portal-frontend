@@ -16,10 +16,11 @@ export function ProdutoCard({ produto, onAdicionar }: Props) {
   const { data: favoritosIds } = useFavoritosIds()
   const toggleFavorito = useToggleFavorito()
   const favorito = favoritosIds?.includes(produto.id) ?? false
+  const segundaFoto = (produto.imagens ?? []).find((f) => f && f !== produto.imagem) ?? null
 
   return (
     <div className="group w-[220px] shrink-0 overflow-hidden rounded-2xl border border-mist-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl">
-      <div className="relative aspect-square bg-mist-50">
+      <div className="relative aspect-square" style={{ background: 'radial-gradient(circle at 50% 35%, #ffffff 0%, #f3f5f8 60%, #e8ebf0 100%)' }}>
         {produto.etiqueta && (
           <span className="absolute left-3 top-3 z-10 rounded-full bg-red-500 px-2.5 py-1 text-[10px] font-bold text-white">
             {produto.etiqueta}
@@ -39,13 +40,22 @@ export function ProdutoCard({ produto, onAdicionar }: Props) {
           type="button"
           onClick={() => setDetalheAberto(true)}
           aria-label={`Ver fotos de ${produto.nome}`}
-          className="grid size-full cursor-zoom-in place-items-center p-4"
+          className="relative grid size-full cursor-zoom-in place-items-center p-4"
         >
+          {/* sombra no "chão" + segunda foto ao passar o rato (quando existe) */}
+          <span className="pointer-events-none absolute bottom-[10%] left-1/2 h-[6%] w-[55%] -translate-x-1/2 rounded-[50%] bg-black/15 blur-md" />
           <img
             src={uploadUrl('produtos', produto.imagem) ?? '/placeholder.png'}
-            className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110"
+            className={`relative max-h-[86%] max-w-[86%] object-contain drop-shadow-[0_14px_16px_rgba(15,23,42,0.18)] transition duration-500 group-hover:scale-105 ${segundaFoto ? 'group-hover:opacity-0' : ''}`}
             alt={produto.nome}
           />
+          {segundaFoto && (
+            <img
+              src={uploadUrl('produtos', segundaFoto)!}
+              className="absolute inset-0 m-auto max-h-[78%] max-w-[78%] object-contain opacity-0 drop-shadow-[0_14px_16px_rgba(15,23,42,0.18)] transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+              alt=""
+            />
+          )}
         </button>
         <span className="pointer-events-none absolute bottom-2 right-2 grid size-7 place-items-center rounded-full bg-white/90 text-slate-500 opacity-0 shadow transition group-hover:opacity-100">
           <ZoomIn className="size-3.5" />
