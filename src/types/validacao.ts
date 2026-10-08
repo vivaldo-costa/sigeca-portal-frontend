@@ -33,7 +33,11 @@ export interface ValidacaoCartao {
   agrupamento: string | null
   diocese: string | null
   validade: string
-  eventos: ValidacaoEvento[]
-  formacoes: ValidacaoFormacao[]
-  pedidos: ValidacaoPedido[]
+  /**
+   * Histórico — a API só o envia ao próprio ou a quem tem sessão iniciada
+   * com permissão de gestão. Numa leitura anónima do QR vem ausente.
+   */
+  eventos?: ValidacaoEvento[]
+  formacoes?: ValidacaoFormacao[]
+  pedidos?: ValidacaoPedido[]
 }

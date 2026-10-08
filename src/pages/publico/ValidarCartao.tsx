@@ -62,17 +62,25 @@ export function ValidarCartaoPage() {
         {data?.encontrado && (
           <>
             <CartaoCard dados={data} />
-            <ListaCard titulo="Eventos inscritos" icon={Tent} corIcon="text-indigo-500" vazio="Sem inscrições em eventos.">
-              {data.eventos.map((ev, i) => (
-                <ItemInscricao key={i} item={ev} datas={[ev.data_evento, ev.data_fim]} />
-              ))}
-            </ListaCard>
-            <ListaCard titulo="Formações inscritas" icon={GraduationCap} corIcon="text-amber-500" vazio="Sem inscrições em formações.">
-              {data.formacoes.map((fm, i) => (
-                <ItemInscricao key={i} item={fm} datas={[fm.data_inicio, fm.data_fim]} />
-              ))}
-            </ListaCard>
-            <PedidosCard pedidos={data.pedidos} />
+            {data.eventos && data.formacoes && data.pedidos ? (
+              <>
+                <ListaCard titulo="Eventos inscritos" icon={Tent} corIcon="text-indigo-500" vazio="Sem inscrições em eventos.">
+                  {data.eventos.map((ev, i) => (
+                    <ItemInscricao key={i} item={ev} datas={[ev.data_evento, ev.data_fim]} />
+                  ))}
+                </ListaCard>
+                <ListaCard titulo="Formações inscritas" icon={GraduationCap} corIcon="text-amber-500" vazio="Sem inscrições em formações.">
+                  {data.formacoes.map((fm, i) => (
+                    <ItemInscricao key={i} item={fm} datas={[fm.data_inicio, fm.data_fim]} />
+                  ))}
+                </ListaCard>
+                <PedidosCard pedidos={data.pedidos} />
+              </>
+            ) : (
+              <p className="rounded-2xl bg-white p-4 text-center text-xs text-mist-400 shadow-sm">
+                O histórico de participação só é mostrado ao próprio sócio ou à equipa com sessão iniciada no SIGECA.
+              </p>
+            )}
           </>
         )}
       </div>

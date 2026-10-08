@@ -4,6 +4,7 @@ import type { Pedido, StatusPedido } from '@/types/perfil'
 import { useGerarRecibo } from '@/hooks/usePerfil'
 import { getApiErrorMessage } from '@/lib/api'
 import { notificar } from '@/lib/notificar'
+import { baixarFicheiroProtegido } from '@/lib/download'
 import { uploadUrl } from '@/lib/uploads'
 import { Contador, EmptyState } from './ActividadesTab'
 
@@ -115,35 +116,49 @@ function PedidoCard({ pedido }: { pedido: Pedido }) {
 
 function RecibButton({ pedidoId, pdfExistente, compacto }: { pedidoId: number; pdfExistente: string | null; compacto?: boolean }) {
   const gerar = useGerarRecibo()
-  const [url, setUrl] = useState(pdfExistente ? `/uploads/recibos/${pdfExistente}` : null)
+  // O recibo é privado (já não é servido em /uploads): descarrega-se pela
+  // API com o token, em GET /pedidos/:id/recibo (só o próprio ou o ADMIN).
+  const [pronto, setPronto] = useState(!!pdfExistente)
+  const [aDescarregar, setADescarregar] = useState(false)
 
   async function handleClick(e: React.MouseEvent) {
     e.stopPropagation()
-    if (url) return
+    if (pronto) return
     try {
-      const gerado = await gerar.mutateAsync(pedidoId)
-      setUrl(gerado)
+      await gerar.mutateAsync(pedidoId)
+      setPronto(true)
     } catch (err) {
       notificar.erro(getApiErrorMessage(err, 'Não foi possível gerar o recibo.'))
     }
   }
 
-  if (url) {
+  async function descarregar(e: React.MouseEvent) {
+    e.stopPropagation()
+    if (aDescarregar) return
+    setADescarregar(true)
+    try {
+      await baixarFicheiroProtegido(`/pedidos/${pedidoId}/recibo`, `recibo-pedido-${pedidoId}.pdf`)
+    } catch (err) {
+      notificar.erro(getApiErrorMessage(err, 'Não foi possível transferir o recibo.'))
+    } finally {
+      setADescarregar(false)
+    }
+  }
+
+  if (pronto) {
     return (
-      <a
-        href={url}
-        target="_blank"
-        rel="noreferrer"
-        download
-        onClick={(e) => e.stopPropagation()}
+      <button
+        type="button"
+        onClick={descarregar}
+        disabled={aDescarregar}
         className={
           compacto
             ? 'inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100'
             : 'inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-emerald-700'
         }
       >
-        <FileDown className="size-3.5" /> {compacto ? 'Recibo' : 'Transferir Recibo'}
-      </a>
+        {aDescarregar ? <Loader2 className="size-3.5 animate-spin" /> : <FileDown className="size-3.5" />} {compacto ? 'Recibo' : 'Transferir Recibo'}
+      </button>
     )
   }
 
