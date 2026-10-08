@@ -15,6 +15,7 @@ const navLinks = [
   { to: '/dashboard/loja', label: 'Loja Escutista' },
   { to: '/dashboard/comunidade', label: 'Comunidade' },
   { to: '/dashboard/atividades', label: 'Actividades & Formações' },
+  { to: '/formacoes', label: 'Formações' },
   { to: '/dashboard/documentos', label: 'Documentos' },
   { to: '/dashboard/aprender', label: 'Ajuda' },
 ]

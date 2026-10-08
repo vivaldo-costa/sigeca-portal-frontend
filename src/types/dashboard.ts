@@ -65,6 +65,10 @@ export interface Atividade {
   valor_pago?: number
   prestacoes?: number
   galeria_total: number
+  // Coordenadas bancárias próprias do evento (ex.: Diocese organizadora); null = não definidas
+  banco?: string | null
+  iban?: string | null
+  titular_conta?: string | null
 }
 
 export interface FotoGaleria {

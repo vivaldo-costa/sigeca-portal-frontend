@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { X, Coins, Upload, Loader2, CircleCheck, FileText } from 'lucide-react'
+import { X, Coins, Upload, Loader2, CircleCheck, FileText, Landmark, Copy, Check } from 'lucide-react'
 import { useRegistarPagamento } from '@/hooks/useInscricoes'
 import { getApiErrorMessage } from '@/lib/api'
 import { notificar } from '@/lib/notificar'
@@ -12,6 +12,47 @@ const METODOS = ['Transferência Bancária', 'Multicaixa Express', 'Depósito', 
 interface Props {
   atividade: Atividade
   onClose: () => void
+}
+
+/** Coordenadas bancárias definidas pela organização do evento, com botão para copiar o IBAN. */
+function CoordenadasBancarias({ atividade: a }: { atividade: Atividade }) {
+  const [copiado, setCopiado] = useState(false)
+  if (!a.iban) return null
+
+  async function copiar() {
+    try {
+      await navigator.clipboard.writeText(a.iban!.replace(/\s+/g, ''))
+      setCopiado(true)
+      notificar.sucesso('IBAN copiado.')
+      setTimeout(() => setCopiado(false), 2000)
+    } catch {
+      notificar.erro('Não foi possível copiar — selecciona o IBAN e copia manualmente.')
+    }
+  }
+
+  return (
+    <div className="rounded-xl border border-blue-100 bg-blue-50 p-4">
+      <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-blue-700">
+        <Landmark className="size-3.5" /> Dados para transferência
+      </p>
+      <div className="space-y-1 text-sm text-blue-900">
+        {a.titular_conta && <p><span className="font-medium text-blue-600">Titular:</span> {a.titular_conta}</p>}
+        {a.banco && <p><span className="font-medium text-blue-600">Banco:</span> {a.banco}</p>}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-medium text-blue-600">IBAN:</span>
+          <strong className="select-all break-all font-mono">{a.iban}</strong>
+          <button
+            type="button"
+            onClick={copiar}
+            className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-white px-2 py-0.5 text-xs font-medium text-blue-700 transition hover:bg-blue-100"
+          >
+            {copiado ? <Check className="size-3" /> : <Copy className="size-3" />}
+            {copiado ? 'Copiado' : 'Copiar'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 /** Modal de pagamento — equivalente ao formulário de pagamento_evento.php. */
@@ -103,6 +144,8 @@ export function PagamentoModal({ atividade: a, onClose }: Props) {
                 </div>
               )}
             </div>
+
+            <CoordenadasBancarias atividade={a} />
 
             {totalPrestacoes > 1 && (
               <div>

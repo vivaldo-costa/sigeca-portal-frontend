@@ -12,6 +12,8 @@ import { VerificarCertificadoPage } from '@/pages/publico/VerificarCertificado'
 import { CarrinhoPage } from '@/pages/carrinho/Carrinho'
 import { CheckoutPage } from '@/pages/carrinho/Checkout'
 import { DenunciarPage } from '@/pages/denuncias/DenunciarPage'
+import { FormacoesPage } from '@/pages/formacoes/FormacoesPage'
+import { FormacaoDetalhePage } from '@/pages/formacoes/FormacaoDetalhePage'
 import { AppShell } from '@/components/layout/AppShell'
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
 import { Preloader } from '@/components/ui/Preloader'
@@ -49,6 +51,8 @@ export default function App() {
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/carrinho" element={<CarrinhoPage />} />
           <Route path="/denunciar" element={<DenunciarPage />} />
+          <Route path="/formacoes" element={<FormacoesPage />} />
+          <Route path="/formacoes/:id" element={<FormacaoDetalhePage />} />
           <Route path="/carrinho/checkout" element={<CheckoutPage />} />
           {/* Próximo módulo: /cartao (fluxo interno, ex-cartao/dados.php) */}
         </Route>
