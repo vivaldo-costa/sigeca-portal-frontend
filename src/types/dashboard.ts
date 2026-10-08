@@ -41,6 +41,22 @@ export interface MinhaAvaliacao {
   updated_at: string
 }
 
+export type EstadoPagamentoInscricao = 'pendente' | 'confirmado' | 'rejeitado'
+
+/** Comprovativo de pagamento enviado pelo próprio membro, com o estado da validação. */
+export interface PagamentoInscricao {
+  id: number
+  inscricao_id: number
+  estado: EstadoPagamentoInscricao
+  tipo_pagamento: 'completo' | 'prestacao'
+  numero_prestacao: number | null
+  metodo_pagamento: string
+  motivo_rejeicao: string | null
+  data_submissao: string
+  /** Data em que foi validado ou rejeitado (null enquanto pendente). */
+  data_decisao: string | null
+}
+
 export type EstadoInscricao = null | 'pendente' | 'confirmada' | 'pago' | 'cancelada' | 'cancelado'
 
 export interface Atividade {
@@ -64,6 +80,7 @@ export interface Atividade {
   inscricao_id?: number
   valor_pago?: number
   prestacoes?: number
+  pagamentos?: PagamentoInscricao[]
   galeria_total: number
   // Coordenadas bancárias próprias do evento (ex.: Diocese organizadora); null = não definidas
   banco?: string | null

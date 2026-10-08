@@ -6,6 +6,7 @@ import logoEstatico from '@/assets/sigeca-logo.svg'
 import { ProgramaEventoModal } from './ProgramaEventoModal'
 import { GaleriaEventoModal } from './GaleriaEventoModal'
 import { useEntrarListaEspera, useMinhaPosicaoEspera, useSairListaEspera } from '@/hooks/useListaEspera'
+import { rejeitadosPorReenviar } from '@/components/pagamentos/EstadoPagamentos'
 
 interface Props {
   atividade: Atividade
@@ -50,6 +51,8 @@ export function AtividadeCard({ atividade: a, onInscrever, onPagar }: Props) {
             {isEvento ? '' : ` · ${a.tipo_acesso === 'Grátis' ? 'Gratuito' : `${a.valor.toLocaleString('pt-PT', { minimumFractionDigits: 2 })} Kz`}`}
           </p>
         )}
+
+        <EstadoComprovativo atividade={a} />
 
         <div className="flex gap-2">
           <div className="flex-1">
@@ -103,7 +106,7 @@ function EstadoBotao({ atividade: a, onInscrever, onPagar }: Props) {
     case 'confirmada':
       return (
         <button onClick={() => onPagar(a)} className={`${base} bg-blue-600 text-white hover:bg-blue-700`}>
-          Efectuar pagamento
+          {rejeitadosPorReenviar(a.pagamentos).length > 0 ? 'Enviar novo comprovativo' : 'Efectuar pagamento'}
         </button>
       )
     case 'pago':
@@ -114,6 +117,32 @@ function EstadoBotao({ atividade: a, onInscrever, onPagar }: Props) {
     default:
       return <button disabled className={`${base} bg-slate-400 text-white`}>Estado indefinido</button>
   }
+}
+
+/**
+ * Estado do último comprovativo enviado pelo membro: rejeitado (com o
+ * motivo, para corrigir e reenviar) ou ainda pendente de validação.
+ */
+function EstadoComprovativo({ atividade: a }: { atividade: Atividade }) {
+  if (a.estado === 'pago' || a.estado === 'cancelada' || a.estado === 'cancelado') return null
+  const rejeitado = rejeitadosPorReenviar(a.pagamentos)[0]
+  if (rejeitado) {
+    return (
+      <div className="mb-2 rounded-lg bg-red-600/85 px-2.5 py-1.5 text-[11px] leading-snug text-white" title={rejeitado.motivo_rejeicao ?? undefined}>
+        <p className="font-bold">Comprovativo rejeitado</p>
+        {rejeitado.motivo_rejeicao && <p className="line-clamp-2 text-white/90">Motivo: {rejeitado.motivo_rejeicao}</p>}
+      </div>
+    )
+  }
+  const pendente = a.pagamentos?.find((p) => p.estado === 'pendente')
+  if (pendente) {
+    return (
+      <p className="mb-2 inline-block rounded-full bg-amber-500/90 px-2.5 py-0.5 text-[10.5px] font-semibold text-white">
+        Comprovativo pendente de validação
+      </p>
+    )
+  }
+  return null
 }
 
 /** Actividade esgotada (vagas preenchidas) — permite entrar/sair da lista de espera e mostra a posição na fila. */

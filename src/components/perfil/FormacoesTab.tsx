@@ -2,6 +2,7 @@ import { GraduationCap, MapPin, CalendarPlus, Users, CircleCheck, CircleX, Prese
 import { uploadUrl } from '@/lib/uploads'
 import type { InscricaoFormacao } from '@/types/perfil'
 import { Contador, EmptyState } from './ActividadesTab'
+import { ListaPagamentos } from '@/components/pagamentos/EstadoPagamentos'
 
 export function FormacoesTab({ formacoes }: { formacoes: InscricaoFormacao[] }) {
   if (formacoes.length === 0) {
@@ -65,6 +66,10 @@ export function FormacoesTab({ formacoes }: { formacoes: InscricaoFormacao[] }) 
                     <CalendarPlus className="size-3" /> Inscrito em {new Date(f.inscrito_em).toLocaleDateString('pt-PT')}
                   </span>
                 </div>
+                <ListaPagamentos
+                  pagamentos={f.pagamentos ?? []}
+                  linkReenvio={f.estado === 'pago' || f.estado === 'cancelada' ? undefined : '/dashboard/atividades'}
+                />
               </div>
             </div>
           </li>

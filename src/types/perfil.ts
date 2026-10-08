@@ -1,3 +1,5 @@
+import type { PagamentoInscricao } from './dashboard'
+
 export interface PerfilDados {
   codigo_associado: string
   nome: string
@@ -29,6 +31,8 @@ export interface InscricaoEvento {
   data_evento: string
   inscrito_em: string
   estado: EstadoInscricaoPerfil
+  inscricao_id: number
+  pagamentos: PagamentoInscricao[]
 }
 
 export interface InscricaoFormacao {
@@ -42,6 +46,9 @@ export interface InscricaoFormacao {
   vagas_totais: number
   vagas_ocupadas: number
   vagas_disponiveis: number
+  estado?: EstadoInscricaoPerfil
+  inscricao_id: number
+  pagamentos: PagamentoInscricao[]
 }
 
 export interface PedidoItem {

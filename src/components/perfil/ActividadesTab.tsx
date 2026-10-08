@@ -1,6 +1,7 @@
 import { Tent, MapPin, CalendarCheck, Image as ImageIcon } from 'lucide-react'
 import { uploadUrl } from '@/lib/uploads'
 import type { InscricaoEvento } from '@/types/perfil'
+import { ListaPagamentos } from '@/components/pagamentos/EstadoPagamentos'
 
 const ESTADO_META: Record<string, { cls: string; icon: string }> = {
   pendente: { cls: 'bg-yellow-100 text-yellow-800', icon: '⏱' },
@@ -62,6 +63,10 @@ export function ActividadesTab({ atividades }: { atividades: InscricaoEvento[] }
                       {meta.icon} {chave ? chave[0].toUpperCase() + chave.slice(1) : '—'}
                     </span>
                   </div>
+                  <ListaPagamentos
+                    pagamentos={e.pagamentos ?? []}
+                    linkReenvio={chave === 'pago' || chave === 'cancelada' ? undefined : '/dashboard/atividades'}
+                  />
                 </div>
               </div>
             </li>

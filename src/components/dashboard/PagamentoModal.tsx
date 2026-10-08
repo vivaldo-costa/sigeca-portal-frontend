@@ -5,6 +5,7 @@ import { getApiErrorMessage } from '@/lib/api'
 import { notificar } from '@/lib/notificar'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { ListaPagamentos, rejeitadosPorReenviar } from '@/components/pagamentos/EstadoPagamentos'
 import type { Atividade } from '@/types/dashboard'
 
 const METODOS = ['Transferência Bancária', 'Multicaixa Express', 'Depósito', 'Numerário na sede']
@@ -68,7 +69,24 @@ export function PagamentoModal({ atividade: a, onClose }: Props) {
   const [tipoPagamento, setTipoPagamento] = useState<'completo' | 'prestacao'>(
     totalPrestacoes > 1 ? 'prestacao' : 'completo'
   )
-  const [numeroPrestacao, setNumeroPrestacao] = useState(1)
+  // Estado de cada prestação conforme os comprovativos já enviados: validada
+  // ou em validação bloqueia novo envio; rejeitada (ou sem envio) fica livre.
+  const pagamentos = a.pagamentos ?? []
+  const porReenviar = rejeitadosPorReenviar(pagamentos)
+  function estadoPrestacao(n: number): 'validada' | 'em_validacao' | 'rejeitada' | null {
+    const daPrestacao = pagamentos.filter((p) => p.tipo_pagamento === 'prestacao' && Number(p.numero_prestacao) === n)
+    if (daPrestacao.some((p) => p.estado === 'confirmado')) return 'validada'
+    if (daPrestacao.some((p) => p.estado === 'pendente')) return 'em_validacao'
+    if (daPrestacao.some((p) => p.estado === 'rejeitado')) return 'rejeitada'
+    return null
+  }
+  const prestacaoInicial = (() => {
+    const rejeitada = porReenviar.find((p) => p.tipo_pagamento === 'prestacao' && p.numero_prestacao)
+    if (rejeitada?.numero_prestacao) return Number(rejeitada.numero_prestacao)
+    const livre = Array.from({ length: totalPrestacoes }, (_, i) => i + 1).find((n) => !estadoPrestacao(n) || estadoPrestacao(n) === 'rejeitada')
+    return livre ?? 1
+  })()
+  const [numeroPrestacao, setNumeroPrestacao] = useState(prestacaoInicial)
   const [metodo, setMetodo] = useState(METODOS[0])
   const [transacao, setTransacao] = useState('')
   const [comprovativo, setComprovativo] = useState<File | null>(null)
@@ -145,6 +163,16 @@ export function PagamentoModal({ atividade: a, onClose }: Props) {
               )}
             </div>
 
+            {porReenviar.length > 0 && (
+              <div className="rounded-xl border border-error-bd bg-error-bg px-4 py-3 text-xs text-error-text">
+                <p className="font-semibold">O teu comprovativo foi rejeitado.</p>
+                {porReenviar[0].motivo_rejeicao && <p className="mt-0.5"><span className="font-semibold">Motivo:</span> {porReenviar[0].motivo_rejeicao}</p>}
+                <p className="mt-1">Corrige o indicado e envia um novo comprovativo abaixo.</p>
+              </div>
+            )}
+
+            <ListaPagamentos pagamentos={pagamentos} />
+
             <CoordenadasBancarias atividade={a} />
 
             {totalPrestacoes > 1 && (
@@ -181,9 +209,15 @@ export function PagamentoModal({ atividade: a, onClose }: Props) {
                   onChange={(e) => setNumeroPrestacao(Number(e.target.value))}
                   className="h-12 w-full rounded-[var(--radius-sig-md)] border-[1.5px] border-mist-200 bg-mist-50 px-3.5 text-[15px] outline-none transition-colors hover:border-mist-400 hover:bg-white focus:border-ink focus:bg-white"
                 >
-                  {Array.from({ length: totalPrestacoes }, (_, i) => i + 1).map((n) => (
-                    <option key={n} value={n}>Prestação {n} de {totalPrestacoes}</option>
-                  ))}
+                  {Array.from({ length: totalPrestacoes }, (_, i) => i + 1).map((n) => {
+                    const estado = estadoPrestacao(n)
+                    const sufixo = estado === 'validada' ? ' — validada' : estado === 'em_validacao' ? ' — em validação' : estado === 'rejeitada' ? ' — rejeitada, envia de novo' : ''
+                    return (
+                      <option key={n} value={n} disabled={estado === 'validada' || estado === 'em_validacao'}>
+                        Prestação {n} de {totalPrestacoes}{sufixo}
+                      </option>
+                    )
+                  })}
                 </select>
               </div>
             )}
